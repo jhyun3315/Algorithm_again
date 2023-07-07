@@ -10,7 +10,7 @@ public class 순열 {
 
     public static void main(String[] args) throws IOException {
         // 원본배열
-        int[] arr = {1, 3, 5};
+        int[] arr = {1,2,3,4,5};
         // 담을배열
         int[] sel = new int[2];
         
