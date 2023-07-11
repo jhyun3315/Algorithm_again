@@ -3,7 +3,6 @@ package solvedAC.class01;
 import java.io.*;
 import java.util.*;
 
-
 /*
     백준 - 단어의 개수
     https://www.acmicpc.net/problem/1152
