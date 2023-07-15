@@ -16,8 +16,7 @@ public class boj1181_단어정렬 {
 
          for(int i=0;i<N;i++) set.add(br.readLine());
 
-         String[] arr = set.toArray(new String[set.size()]);
-
+         String[] arr = set.toArray(new String[0]);
 
          Arrays.sort(arr, new Comparator<String>(){
              public int compare(String s1, String s2){
