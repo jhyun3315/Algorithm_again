@@ -1,12 +1,21 @@
 
+/*
+    백준 - 무기 공학
+    https://www.acmicpc.net/problem/18430
+ */
+
 import java.io.*;
 import java.util.*;
 
 public class boj18430_무기공학 {
     static int N, M, max;
     static int[][] board;
-    static int[] dr = { 0, 0, 1, 1 };
-    static int[] dc = { 0, 1, 1, 0 };
+    static int[][][] move = {
+            {{0, -1}, {1, 0}},
+            {{-1,0}, {0, -1}},
+            {{-1, 0}, {0, 1}},
+            {{0, 1}, {1,0}}
+    };
     static boolean[][] visited;
 
     public static void main(String[] args) throws IOException {
@@ -14,85 +23,54 @@ public class boj18430_무기공학 {
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        board = new int[N][M];
-        visited = new boolean[N][M];
+        board = new int[6][6];
+        visited = new boolean[6][6];
 
         max = 0;
 
-        if (N * M >= 4) {
-            for (int r = 0; r < N; r++) {
-                st = new StringTokenizer(br.readLine(), " ");
-                for (int c = 0; c < M; c++) {
-                    board[r][c] = Integer.parseInt(st.nextToken());
-                }
+        for (int r = 0; r < N; r++) {
+            st = new StringTokenizer(br.readLine(), " ");
+            for (int c = 0; c < M; c++) {
+                board[r][c] = Integer.parseInt(st.nextToken());
             }
-            dfs(0, 0, 0);
         }
+        dfs(0, 0, 0);
         System.out.println(max);
     }
 
-    public static void dfs(int r, int c, int sum) {
-        if (r == N - 1) {
-            System.out.println("sum: " + sum);
-            max = Math.max(sum, max);
+    public static void dfs(int r, int c, int sum){
+        if (c == M) {
+            c = 0;
+            r++;
+        }
+
+        if(r==N) {
+            max = Math.max(max,sum);
             return;
         }
 
-        if (c == M - 1)
-            dfs(r + 1, 0, sum);
-        else if (!visited[r][c]) {
-            Loop1: for (int d = 0; d < 4; d++) {
-                int nr = r + dr[d];
-                int nc = c + dc[d];
+        if (!visited[r][c]) {
+            for (int d = 0; d < 4; d++) {
+                int nr1 = r + move[d][0][0];
+                int nc1 = c + move[d][0][1];
+                int nr2 = r + move[d][1][0];
+                int nc2 = c + move[d][1][1];
 
-                if (nr >= 0 && nr < N && nc >= 0 && nc < M && !visited[nr][nc]) {
-                    int nsum = 0;
-                    int cnt = 0;
+                if (nr1 >= 0 && nr2 >= 0 && nr1 < N && nr2 < N && nc1 >= 0 && nc2 >= 0 && nc1 < M && nc2 < M) {
+                    if (visited[nr1][nc1] || visited[nr2][nc2]) continue;
 
-                    for (int dd = 0; dd < 3; dd++) {
-                        int rr = nr + dr[(d + dd) % 4];
-                        int cc = nc + dc[(d + dd) % 4];
+                    visited[nr1][nc1] = true;
+                    visited[nr2][nc2] = true;
+                    visited[r][c] = true;
 
-                        if (rr >= 0 && rr < N && cc >= 0 && cc < M) {
-                            if (visited[rr][cc]) {
-                                for (int x = 1; x < dd + 1; x++) {
-                                    int xr = rr - x;
-                                    int xc = cc - x;
-                                    if (xr < 0)
-                                        xr += (N);
-                                    if (xc < 0)
-                                        xc += (M);
-                                    visited[xr][xc] = false;
-                                }
-                                continue Loop1;
-                            } else {
-                                cnt++;
-                                nsum += board[rr][cc];
-                                if (dd == 1)
-                                    nsum += board[rr][cc];
-                                visited[rr][cc] = true;
-                                System.out.print(rr + "," + cc + " :" + cnt + " ");
-                            }
-                        }
-                    }
-                    System.out.println();
-                    if (cnt == 3) {
-                        dfs(r, c + 1, sum + nsum);
-                        reverse(d, nr, nc);
-                    }
+                    dfs(r, c + 1, sum + (board[r][c] * 2) + board[nr1][nc1] + board[nr2][nc2]);
+                    visited[r][c] = false;
+                    visited[nr1][nc1] = false;
+                    visited[nr2][nc2] = false;
                 }
+
             }
         }
-    }
-
-    public static void reverse(int start, int r, int c) {
-        for (int d = start; d < start + 3; d++) {
-            int nr = r + dr[d % 4];
-            int nc = c + dc[d % 4];
-
-            if (nr >= 0 && nr < N && nc >= 0 && nc < M) {
-                visited[nr][nc] = false;
-            }
-        }
+        dfs(r, c + 1, sum);
     }
 }

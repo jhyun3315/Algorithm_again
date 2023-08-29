@@ -24,61 +24,59 @@ public class boj2667_단지번호붙이기 {
     }
 
     public static void main(String[] args) throws IOException{
-       BufferedReader br = new BufferedReader(new InputStream R
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
-        
 
+        N = Integer.parseInt(br.readLine());
         board = new int[N][N];
-        visited = new boolean[
-        
+        visited = new boolean[N][N];
 
-             char[ ]  c h   =  br.r e
+        for(int r=0;r<N;r++){
+            char[] ch = br.readLine().toCharArray();
             for(int c=0;c<N;c++){
-                 board [ r] [ c ]  = In t
-                
-            
-        i
+                board[r][c] = Integer.parseInt(String.valueOf(ch[c]));
+            }
+        }
+        int answer = 0;
         int count=0;
-        ArrayList < In
-        
+        ArrayList<Integer> lst = new ArrayList<>();
 
-             for(i n t  c = 0; c<N; c
-                 if(!v i si t e d[ r][c ]
-                     answer++; 
-                    count = g
-                    if(count!=0)  lst
-                       
-                        
-                
-            
-        C
-        sb.append(answer).appe
-        for(int i : lst) sb.append(i).a
-        Sys tem.out.print
-            n(sb);
-        
+        for(int r=0;r<N;r++){
+            for(int c=0;c<N;c++){
+                if(!visited[r][c] && board[r][c] == 1){
+                    answer++;
+                    count = go(r,c);
+                    if(count!=0) lst.add(count);
+                }
+            }
+        }
+        Collections.sort(lst);
+        sb.append(answer).append('\n');
+        for(int i : lst) sb.append(i).append('\n');
+        System.out.println(sb);
+    }
 
     private static int go(int r, int c) {
         Queue<Point> q = new LinkedList<>();
         q.add(new Point(r,c));
-        visited[r][c] = tr ue;
+        visited[r][c] = true;
         int cnt =1;
- 
+
         while(!q.isEmpty()){
-            i nt size = q.si ze();
+            int size = q.size();
             for(int s=0;s<size;s++){
-                 Point   p  =   q.pol l(); 
+                Point p = q.poll();
                 int pr = p.r;
                 int pc = p.c;
 
                 for(int d=0;d<4;d++){
-                     int n r  =   p r+ dr[d ];
-                    int nc = pc + dc[d];
-  
+                    int nr = pr+dr[d];
+                    int nc = pc+dc[d];
+
                     if(nr>=0 && nr<N && nc >=0 && nc<N && !visited[nr][nc] && board[nr][nc]==1){
-                         v is ited[nr ] [nc] = tru e;     
+                        visited[nr][nc] = true;
                         q.add(new Point(nr,nc));
-                        cnt++; 
+                        cnt++;
                     }
 
                 }
@@ -86,5 +84,4 @@ public class boj2667_단지번호붙이기 {
         }
         return cnt;
     }
-
 }

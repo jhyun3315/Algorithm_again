@@ -1,7 +1,9 @@
+package 조합;
+
 import java.io.IOException;
 import java.util.*;
 
-public class combination2 {
+class combination2 {
     public static void main(String[] args) throws IOException {
         /*
         arr : 뽑을 숫자가 들어있는 배열 

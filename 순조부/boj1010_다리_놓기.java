@@ -6,7 +6,7 @@ import java.util.*;
     https://www.acmicpc.net/problem/1010
  */
 
-public class boj1010_다리놓기 {
+public class boj1010_다리_놓기 {
     static int[][] dp;
 
     public static void main(String[] args) throws IOException {
