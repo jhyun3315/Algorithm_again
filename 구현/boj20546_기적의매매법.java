@@ -1,3 +1,4 @@
+
 /*
  *  백준 - 기적의 매매법
  *  https://www.acmicpc.net/problem/20546
