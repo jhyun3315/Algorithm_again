@@ -1,4 +1,3 @@
-
 /*
     백준 - 무기 공학
     https://www.acmicpc.net/problem/18430
@@ -11,10 +10,10 @@ public class boj18430_무기공학 {
     static int N, M, max;
     static int[][] board;
     static int[][][] move = {
-            {{0, -1}, {1, 0}},
-            {{-1,0}, {0, -1}},
-            {{-1, 0}, {0, 1}},
-            {{0, 1}, {1,0}}
+            { { 0, -1 }, { 1, 0 } },
+            { { -1, 0 }, { 0, -1 } },
+            { { -1, 0 }, { 0, 1 } },
+            { { 0, 1 }, { 1, 0 } }
     };
     static boolean[][] visited;
 
@@ -38,14 +37,14 @@ public class boj18430_무기공학 {
         System.out.println(max);
     }
 
-    public static void dfs(int r, int c, int sum){
+    public static void dfs(int r, int c, int sum) {
         if (c == M) {
             c = 0;
             r++;
         }
 
-        if(r==N) {
-            max = Math.max(max,sum);
+        if (r == N) {
+            max = Math.max(max, sum);
             return;
         }
 
@@ -57,7 +56,8 @@ public class boj18430_무기공학 {
                 int nc2 = c + move[d][1][1];
 
                 if (nr1 >= 0 && nr2 >= 0 && nr1 < N && nr2 < N && nc1 >= 0 && nc2 >= 0 && nc1 < M && nc2 < M) {
-                    if (visited[nr1][nc1] || visited[nr2][nc2]) continue;
+                    if (visited[nr1][nc1] || visited[nr2][nc2])
+                        continue;
 
                     visited[nr1][nc1] = true;
                     visited[nr2][nc2] = true;
